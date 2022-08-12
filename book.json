@@ -1,0 +1,13 @@
+{
+    "plugins": [
+        "copy-code-button",
+        "collapsible-chapters",
+        "-sharing",
+        "hide-published-with",
+        "back-to-top-button",
+        "-lunr",
+        "-search",
+        "search-pro-kui"
+    ],
+    "language": "ja"
+}
