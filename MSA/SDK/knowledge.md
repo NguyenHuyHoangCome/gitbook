@@ -1,6 +1,8 @@
 # MSA SDK
 This section describe how to use SDK of MSA.  
 
+To know all the code about MSA_SDK click [here](https://13.230.82.213/msa_sdk/index.html). 
+
 ---
 
 ## contents:
@@ -22,44 +24,59 @@ This section describe how to use SDK of MSA.
 
 ---
 ## class admin
+Access to Admin Definition
 
 ---
 ## class conf_backup
+Backup and restore the ME
 
 ---
 ## class conf_profile
+Access to Monitoring Profiles
 
 ---
 ## class configuration_object
+Delete microservice object instance
 
 ---
 ## class constants
+Log return
 
 ---
 ## class customer
+access user Definition
 
 ---
 ## class device
-access to MSA MD definition data 
+access to MSA ME definition data 
 
 
 ---
 ## class lookup
+look list:
+- customer
+- device (ME)
 
 ---
 ## class msa_api
+Get Response content formated, and show it to log
 
 ---
 ## class orchestration
+Access instance from  other WF
 
 ---
 ## class order
+Access to MS to `CREATE, UPDATE, IMPORT, LIST, READ, DELETE`
 
 ---
 ## class repository
-
+Change, get, create, delete:
+- workflow_definition
+- microservice_details
 ---
 ## class util
 
 ---
 ## class variables
+Access variables from WF
