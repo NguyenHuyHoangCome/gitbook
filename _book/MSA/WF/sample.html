@@ -151,7 +151,20 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.2.1" data-path="../SDK/knowledge.html">
+        <li class="chapter " data-level="1.2.2.1" data-path="../SDK/test.html">
+            
+                <a href="../SDK/test.html">
+            
+                    
+                    sdk knowledge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.2" data-path="../SDK/knowledge.html">
             
                 <a href="../SDK/knowledge.html">
             
@@ -354,13 +367,171 @@
 <li><a href="#wf-call-to-other-wf">WF call to other WF</a></li>
 </ul>
 <hr>
-<h2 id="get-some-value-from-input-menu-in-a-tasknot-wf-variables">get some value from input menu in a task/not WF variables</h2>
+<h2 id="get-some-value-from-input-menu-in-a-tasknot-wf-variables">Get some value from input menu in a task/not WF variables</h2>
+<p>For example, we get the input value menu. After that, print it went the task run successful.</p>
+<p>Here is sample sorce code</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> msa_sdk.variables <span class="hljs-keyword">import</span> Variables
+<span class="hljs-keyword">from</span> msa_sdk.msa_api <span class="hljs-keyword">import</span> MSA_API
+
+dev_var = Variables()
+dev_var.add(<span class="hljs-string">&apos;A&apos;</span>, var_type=<span class="hljs-string">&apos;Integer&apos;</span>)
+dev_var.add(<span class="hljs-string">&apos;B&apos;</span>, var_type=<span class="hljs-string">&apos;Integer&apos;</span>)
+
+context = Variables.task_call(dev_var)
+X = context[<span class="hljs-string">&apos;A&apos;</span>]
+Y = context[<span class="hljs-string">&apos;B&apos;</span>]
+
+Z = int(X) + int(Y)
+context[<span class="hljs-string">&apos;C&apos;</span>] = Z
+
+ret = MSA_API.process_content(<span class="hljs-string">&apos;ENDED&apos;</span>, f<span class="hljs-string">&apos;workflow initialized and ( X : {X}, Y: {Y})&apos;</span>, context, <span class="hljs-keyword">True</span>)
+print(ret)
+</code></pre>
+<p>Debug the task:</p>
+<p>Fill the input data 
+<img src="img/img10.jpg" alt="License01"></p>
+<p>Run the task (task name is <code>Task A</code>) the task will show the input Variables A and B
+<img src="img/img11.jpg" alt="License02"></p>
 <hr>
-<h2 id="pass-variables-from-taska-to-taskb">pass variables from task_a to task_b</h2>
+<h2 id="pass-variables-from-taska-to-taskb">Pass variables from task_a to task_b</h2>
+<p>In <code>task_A</code> we create the Variables name <code>C</code> and value is <code>A + B</code>.</p>
+<p>Here is example code to show value <code>C</code>.</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> msa_sdk.variables <span class="hljs-keyword">import</span> Variables
+<span class="hljs-keyword">from</span> msa_sdk.msa_api <span class="hljs-keyword">import</span> MSA_API
+
+context = Variables.task_call()
+Z = context[<span class="hljs-string">&apos;C&apos;</span>]
+
+ret = MSA_API.process_content(<span class="hljs-string">&apos;ENDED&apos;</span>, f<span class="hljs-string">&apos;value get( C : {Z})&apos;</span>, context, <span class="hljs-keyword">True</span>)
+print(ret)
+</code></pre>
+<p>Degub the task:</p>
+<p>Here is result after user input 2 Variables<code>A</code>,<code>B</code> is <code>1</code> and <code>2</code>.</p>
+<p>the <code>C</code>Variables is <code>A + B</code>
+<img src="img/img12.jpg" alt="License03"></p>
 <hr>
-<h2 id="create-new-user-to-linux-me">create new user to linux ME</h2>
+<h2 id="create-new-user-to-linux-me">Create new user to linux ME</h2>
+<p>Example code </p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">from</span> msa_sdk.variables <span class="hljs-keyword">import</span> Variables
+<span class="hljs-keyword">from</span> msa_sdk.msa_api <span class="hljs-keyword">import</span> MSA_API
+<span class="hljs-keyword">from</span> msa_sdk.order <span class="hljs-keyword">import</span> Order
+
+<span class="hljs-comment"># List all the parameters required by the task</span>
+dev_var = Variables()
+dev_var.add(<span class="hljs-string">&apos;device_id&apos;</span>, var_type=<span class="hljs-string">&apos;Device&apos;</span>)
+dev_var.add(<span class="hljs-string">&apos;user.0.comment&apos;</span>, var_type=<span class="hljs-string">&apos;String&apos;</span>)
+dev_var.add(<span class="hljs-string">&apos;user.0.group_id&apos;</span>, var_type=<span class="hljs-string">&apos;String&apos;</span>)
+dev_var.add(<span class="hljs-string">&apos;user.0.login&apos;</span>, var_type=<span class="hljs-string">&apos;String&apos;</span>)
+dev_var.add(<span class="hljs-string">&apos;user.0.home_dir&apos;</span>, var_type=<span class="hljs-string">&apos;String&apos;</span>)
+dev_var.add(<span class="hljs-string">&apos;user.0.object_id&apos;</span>, var_type=<span class="hljs-string">&apos;String&apos;</span>)
+dev_var.add(<span class="hljs-string">&apos;user.0.password&apos;</span>, var_type=<span class="hljs-string">&apos;String&apos;</span>)
+dev_var.add(<span class="hljs-string">&apos;user.0.shell&apos;</span>, var_type=<span class="hljs-string">&apos;String&apos;</span>)
+dev_var.add(<span class="hljs-string">&apos;user.0.user_id&apos;</span>, var_type=<span class="hljs-string">&apos;String&apos;</span>)
+
+
+context = Variables.task_call(dev_var)
+
+<span class="hljs-comment"># read the ID of the selected managed entity</span>
+device_id = context[<span class="hljs-string">&apos;device_id&apos;</span>]
+
+<span class="hljs-comment"># extract the database ID</span>
+devicelongid = device_id[<span class="hljs-number">3</span>:]
+
+<span class="hljs-comment"># build the Microservice JSON params</span>
+object_parameters = {}
+
+object_parameters[<span class="hljs-string">&apos;user&apos;</span>] = {}
+<span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> context[<span class="hljs-string">&apos;user&apos;</span>]:
+  object_parameters[<span class="hljs-string">&apos;user&apos;</span>][v[<span class="hljs-string">&apos;object_id&apos;</span>]] = v
+
+
+<span class="hljs-comment"># call the CREATE for the specified MS for each device</span>
+order = Order(devicelongid)
+order.command_execute(<span class="hljs-string">&apos;CREATE&apos;</span>, object_parameters)
+
+<span class="hljs-comment"># convert dict object into json</span>
+content = json.loads(order.content)
+
+<span class="hljs-comment"># check if the response is OK</span>
+<span class="hljs-keyword">if</span> order.response.ok:
+    ret = MSA_API.process_content(<span class="hljs-string">&apos;ENDED&apos;</span>,
+                                  f<span class="hljs-string">&apos;STATUS: {content[&quot;status&quot;]}, \
+                                    MESSAGE: successfull&apos;</span>,
+                                  context, <span class="hljs-keyword">True</span>)
+<span class="hljs-keyword">else</span>:
+    ret = MSA_API.process_content(<span class="hljs-string">&apos;FAILED&apos;</span>,
+                                  f<span class="hljs-string">&apos;Import failed \
+                                  - {order.content}&apos;</span>,
+                                  context, <span class="hljs-keyword">True</span>)
+
+print(ret)
+</code></pre>
+<p>Debug the task:</p>
+<p>Chose the ME you want to create user
+<img src="img/img13.jpg" alt="License04"></p>
+<p>Input the user profile</p>
+<p>Then, click the run button
+<img src="img/img14.jpg" alt="License05"></p>
+<p>The new user create sussessful in ME
+<img src="img/img15.jpg" alt="License06"></p>
 <hr>
-<h2 id="get-user-list-from-linux-me-and-create-selectable-user-list--get-user-data-inventory">get user list from linux ME and create selectable user list  (get user data inventory)</h2>
+<h2 id="get-user-list-from-linux-me-and-create-selectable-user-list--get-user-data-inventory">Get user list from linux ME and create selectable user list  (get user data inventory)</h2>
+<p>Example code</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">from</span> msa_sdk.variables <span class="hljs-keyword">import</span> Variables
+<span class="hljs-keyword">from</span> msa_sdk.msa_api <span class="hljs-keyword">import</span> MSA_API
+<span class="hljs-keyword">from</span> msa_sdk.order <span class="hljs-keyword">import</span> Order
+
+<span class="hljs-comment"># List all the parameters required by the task</span>
+dev_var = Variables()
+
+dev_var.add(<span class="hljs-string">&apos;device_id&apos;</span>, var_type=<span class="hljs-string">&apos;Device&apos;</span>)
+<span class="hljs-comment"># dev_var.add(&apos;drop&apos;)</span>
+context = Variables.task_call(dev_var)
+
+<span class="hljs-comment"># read the ID of the selected managed entity</span>
+device_id = context[<span class="hljs-string">&apos;device_id&apos;</span>]
+
+<span class="hljs-comment"># extract the database ID</span>
+devicelongid = device_id[<span class="hljs-number">3</span>:]
+
+<span class="hljs-comment"># build the Microservice JSON params</span>
+
+object_parameters = {}
+object_parameters[<span class="hljs-string">&apos;user&apos;</span>] = <span class="hljs-string">&apos;0&apos;</span>;
+
+<span class="hljs-comment"># call the CREATE for the specified MS for each device</span>
+order = Order(devicelongid)
+order.command_execute(<span class="hljs-string">&apos;IMPORT&apos;</span>, object_parameters)
+
+<span class="hljs-comment"># convert dict object into json</span>
+content = json.loads(order.content)
+hi = []
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> json.loads(content[<span class="hljs-string">&apos;message&apos;</span>])[<span class="hljs-string">&apos;user&apos;</span>]:
+    h = {<span class="hljs-string">&quot;user_id&quot;</span> : json.loads(content[<span class="hljs-string">&apos;message&apos;</span>])[<span class="hljs-string">&apos;user&apos;</span>][<span class="hljs-string">&apos;&apos;</span>+str(i)+<span class="hljs-string">&apos;&apos;</span>][<span class="hljs-string">&apos;user_id&apos;</span>],
+         <span class="hljs-string">&quot;password&quot;</span> : json.loads(content[<span class="hljs-string">&apos;message&apos;</span>])[<span class="hljs-string">&apos;user&apos;</span>][<span class="hljs-string">&apos;&apos;</span>+str(i)+<span class="hljs-string">&apos;&apos;</span>][<span class="hljs-string">&apos;password&apos;</span>],
+         <span class="hljs-string">&quot;object_id&quot;</span> : i
+    }
+    hi.append(h)
+
+context[<span class="hljs-string">&apos;list&apos;</span>] = hi
+<span class="hljs-comment"># check if the response is OK</span>
+
+<span class="hljs-keyword">if</span> order.response.ok:
+    ret = MSA_API.process_content(<span class="hljs-string">&apos;ENDED&apos;</span>,
+                                  f<span class="hljs-string">&apos;STATUS: {content[&quot;status&quot;]}, \
+                                    MESSAGE: successfull&apos;</span>,
+                                  context, <span class="hljs-keyword">True</span>)
+<span class="hljs-keyword">else</span>:
+    ret = MSA_API.process_content(<span class="hljs-string">&apos;FAILED&apos;</span>,
+                                  f<span class="hljs-string">&apos;Import failed \
+                                  - {order.content}&apos;</span>,
+                                  context, <span class="hljs-keyword">True</span>)
+
+print(ret)
+</code></pre>
+<p>Debug the task</p>
 <hr>
 <h2 id="get-user-from-selectable-user-list">get user from selectable user list</h2>
 <hr>
@@ -408,7 +579,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"WF sample","level":"1.2.3.2","depth":3,"next":{"title":"Micro service","level":"1.2.4","depth":2,"path":"MSA/MS/README.md","ref":"./MSA/MS/README.md","articles":[{"title":"MS knowledge","level":"1.2.4.1","depth":3,"path":"MSA/MS/knowledge.md","ref":"./MSA/MS/knowledge.md","articles":[]}]},"previous":{"title":"WF Knowledge","level":"1.2.3.1","depth":3,"path":"MSA/WF/knowledge.md","ref":"./MSA/WF/knowledge.md","articles":[]},"dir":"ltr"},"config":{"plugins":["copy-code-button","collapsible-chapters","-sharing","hide-published-with","back-to-top-button","-lunr","-search","search-pro-kui","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"collapsible-chapters":{},"hide-published-with":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"copy-code-button":{},"search-pro-kui":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"ja","gitbook":"*"},"file":{"path":"MSA/WF/sample.md","mtime":"2022-08-12T09:09:43.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-12T12:55:18.317Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"WF sample","level":"1.2.3.2","depth":3,"next":{"title":"Micro service","level":"1.2.4","depth":2,"path":"MSA/MS/README.md","ref":"./MSA/MS/README.md","articles":[{"title":"MS knowledge","level":"1.2.4.1","depth":3,"path":"MSA/MS/knowledge.md","ref":"./MSA/MS/knowledge.md","articles":[]}]},"previous":{"title":"WF Knowledge","level":"1.2.3.1","depth":3,"path":"MSA/WF/knowledge.md","ref":"./MSA/WF/knowledge.md","articles":[]},"dir":"ltr"},"config":{"plugins":["copy-code-button","collapsible-chapters","-sharing","hide-published-with","back-to-top-button","-lunr","-search","search-pro-kui","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"collapsible-chapters":{},"hide-published-with":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"copy-code-button":{},"search-pro-kui":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"ja","gitbook":"*"},"file":{"path":"MSA/WF/sample.md","mtime":"2022-08-18T05:52:50.193Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-18T05:53:04.856Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

@@ -40,6 +40,8 @@ This section describe how to use SDK of MSA.
 
 ---
 ## class device
+access to MSA MD definition data 
+
 
 ---
 ## class lookup

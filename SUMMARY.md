@@ -3,6 +3,7 @@
 * [MSActivator](./MSA/README.md)
   * [MSA Install](./MSA/install/install.md)
   * [MSA SDK](./MSA/SDK/README.md)
+    * [sdk knowledge](./MSA/SDK/test.md)
     * [SDK Knowledge](./MSA/SDK/knowledge.md)
   * [Workflow](./MSA/WF/README.md)
     * [WF Knowledge](./MSA/WF/knowledge.md)

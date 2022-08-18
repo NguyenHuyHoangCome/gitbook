@@ -2,7 +2,7 @@
 This section describe how to install MSA to CentOS 7.  
 
 ---
-contents：
+## contents：
 
 * [Before you install](#before-you-install)
 * [MSA install](#msa-install)
